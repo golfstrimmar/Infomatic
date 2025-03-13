@@ -1,3 +1,22 @@
+Username
+yushinbox
+Password
+oWzeXEp2gtCWhsS0
+
+mongodb+srv://yushinbox:oWzeXEp2gtCWhsS0@clusterinformatic.qz73m.mongodb.net/informatic?retryWrites=true&w=majority
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
