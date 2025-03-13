@@ -1,19 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true, // Проверка потенциальных ошибок в dev-режиме
+  reactStrictMode: true,
   eslint: {
-    ignoreDuringBuilds: true, // Игнорирует ошибки ESLint при сборке
+    ignoreDuringBuilds: true,
   },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"], // Позволяет использовать SVG как React-компоненты
+      use: ["@svgr/webpack"],
     });
     return config;
   },
   typescript: {
-    ignoreBuildErrors: true, // Игнорирует ошибки TypeScript при сборке
+    ignoreBuildErrors: true,
   },
 };
 
-module.exports = nextConfig; // Экспорт для Next.js
+module.exports = nextConfig;

@@ -22,14 +22,18 @@ const AddArticle: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openModalMessage, setOpenModalMessage] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("  ");
   const [category, setCategory] = useState<string>("");
-
+  const [textToCopy, settextToCopy] = useState<string>("");
+  const [textenCopy, settextenCopy] = useState<string[]>([]);
+  const [errors, seterrors] = useState<string>("");
   // =================================
   const resetForm = () => {
     setTitle("");
     setText("");
     setCategory("");
+    settextenCopy([]);
+    settextToCopy("");
     setSuccessMessage("");
     setOpenModalMessage(false);
   };
@@ -89,6 +93,33 @@ const AddArticle: React.FC = () => {
   };
 
   // =================================
+  const TextToCopyChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    settextToCopy(e.target.value);
+  };
+  // =================================
+  const TextToCopyHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+
+    if (textToCopy.length > 0) {
+      console.log("<==== textToCopy====>", textToCopy);
+      console.log("<====textToCopy.length====>", textToCopy.length);
+      settextenCopy((prev) => {
+        return [...prev, textToCopy];
+      });
+      settextToCopy("");
+    } else {
+      seterrors("value muss sein");
+      setTimeout(() => {
+        seterrors("");
+      }, 1000);
+    }
+  };
+
+  // =================================
   const handleSubmit = async (
     e?:
       | React.FormEvent<HTMLFormElement>
@@ -112,6 +143,7 @@ const AddArticle: React.FC = () => {
         title,
         text,
         category,
+        textenCopy,
       };
       console.log("=====articleData=====", articleData);
       if (socket) {
@@ -125,7 +157,7 @@ const AddArticle: React.FC = () => {
 
   return (
     <form
-      className={`${styles.addauctionform} flex flex-col gap-2 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 space-y-4`}
+      className={`${styles.addauctionform} flex flex-col  max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 space-y-4`}
     >
       <ModalMessage message={successMessage} open={openModalMessage} />
       <h2 className="text-2xl font-semibold italic text-gray-800">Add Form</h2>
@@ -151,6 +183,38 @@ const AddArticle: React.FC = () => {
       />
       <h3 className="text-gray-700 font-bold  italic ">Text: {text}</h3>
       <Input typeInput="text" data="Text" value={text} onChange={TextHandler} />
+
+      {/* ================== */}
+
+      {textenCopy &&
+        textenCopy.map((foo, idx) => {
+          return <p key={idx}>{foo}</p>;
+        })}
+      {/* ================== */}
+
+      <h3 className="text-gray-700 font-bold  italic ">
+        Text to copy: {textToCopy}
+      </h3>
+      <h5 className="text-red-900">{errors}</h5>
+      <div className="flex align-middle gap-1">
+        <Input
+          typeInput="textarea"
+          data="Text to copy"
+          value={textToCopy}
+          onChange={TextToCopyChange}
+        />
+        <button
+          type="button"
+          className="cursor-pointer border border-grey-300 bg-blue-600  text-blue-50 w-8 h-8  rounded-full"
+          onClick={(e) => {
+            TextToCopyHandler(e);
+          }}
+        >
+          +
+        </button>
+      </div>
+      {/* ================== */}
+
       <Button onClick={handleSubmit} children="Add Auction" />
     </form>
   );

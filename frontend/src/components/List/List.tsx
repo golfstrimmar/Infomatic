@@ -9,20 +9,30 @@ import { RootState, useAppSelector } from "@/app/redux/store";
 interface ListProps {
   handlerburgerClick: () => void;
   isOpen: boolean;
+  curTitle: string;
 }
 // =================================
-const List: React.FC<ListProps> = () => {
+const List: React.FC<ListProps> = ({ curTitle }) => {
   const articles = useAppSelector((state) => state.articles.articles);
+  const [newArticles, setnewArticles] = useState([...articles]);
+
   useEffect(() => {
-    if (articles) {
-      console.log("=====articles=====", articles);
+    if (articles && curTitle) {
+      console.log("<====curTitle====>", curTitle);
+      setnewArticles(
+        [...articles].filter((foo) => {
+          return foo.title === curTitle;
+        })
+      );
     }
-  }, [articles]);
+    console.log("<====newArticles====>", newArticles);
+  }, [articles, curTitle]);
+
   return (
-    <div className="list">
-      <div className="bg-gray-200">
-        {articles &&
-          articles.map((el) => {
+    <div className="list ">
+      <div className="">
+        {newArticles &&
+          newArticles.map((el) => {
             return <Article key={el._id} post={el} />;
           })}
       </div>
