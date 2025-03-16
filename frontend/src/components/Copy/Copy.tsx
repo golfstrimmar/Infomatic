@@ -28,7 +28,7 @@ const Copy: React.FC<CopyProps> = ({ text }) => {
   return (
     <textarea
       rows="5"
-      name="Text to copy"
+      name="Texttocopy"
       value={text}
       onClick={handlerCopy}
       className={`${

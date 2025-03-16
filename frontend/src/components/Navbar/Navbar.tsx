@@ -36,29 +36,34 @@ const Navbar: React.FC = () => {
           A
         </Link>
         <Burger handlerburgerClick={() => setIsOpen(!isOpen)} isOpen={isOpen} />
-        <ul className={`${styles["navbar-menu"]} ${isOpen ? styles.run : ""}  flex  gap-2`}>
+        <ul
+          className={`${styles["navbar-menu"]} ${
+            isOpen ? styles.run : ""
+          }  flex  gap-2`}
+        >
           <li>
             <Link
-                href="/"
-                className="text-white hover:text-gray-300 transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
+              href="/"
+              className="text-white hover:text-gray-300 transition-colors duration-200"
+              onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
           </li>
           <li>
             <Link
-                href="/catalog"
-                className="text-white hover:text-gray-300 transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
+              href="/catalog"
+              className="text-white hover:text-gray-300 transition-colors duration-200"
+              onClick={() => setIsOpen(false)}
             >
               Catalog
             </Link>
-          </li>  <li>
+          </li>
+          <li>
             <Link
-                href="/addArticle"
-                className="text-white hover:text-gray-300 transition-colors duration-200"
-                onClick={() => setIsOpen(false)}
+              href="/addArticle"
+              className="text-white hover:text-gray-300 transition-colors duration-200"
+              onClick={() => setIsOpen(false)}
             >
               Add
             </Link>

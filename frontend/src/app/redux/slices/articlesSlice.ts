@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Article {
   _id?: string;
   category: string;
+  tag?: string;
   title: string;
   text: string;
   createdAt: string;
@@ -24,8 +25,11 @@ const articlesSlice = createSlice({
     setArticles(state, action: PayloadAction<Article[]>) {
       state.articles = action.payload;
     },
+    setArticle(state, action: PayloadAction<Article>) {
+      state.articles = [...state.articles, action.payload];
+    },
   },
 });
 
-export const { setArticles } = articlesSlice.actions;
+export const { setArticles, setArticle } = articlesSlice.actions;
 export default articlesSlice.reducer;

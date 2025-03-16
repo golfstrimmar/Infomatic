@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import ClientWrapper from "@/components/ClientWrapper";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,14 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-      <ClientWrapper>
+        <ClientWrapper>
           <Navbar />
-          <div className="container mx-auto pt-18">
-                  {children}
-              </div>
-      </ClientWrapper>
+          <div className="container mx-auto pt-18 ">{children}</div>
+        </ClientWrapper>
       </body>
     </html>
   );

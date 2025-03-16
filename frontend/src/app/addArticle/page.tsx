@@ -9,7 +9,7 @@ import ModalMessage from "@/components/ModalMessage/ModalMessage";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, useAppSelector } from "@/app/redux/store";
 import { useRouter } from "next/navigation";
-import { setArticles } from "@/app/redux/slices/articlesSlice";
+import { setArticle } from "@/app/redux/slices/articlesSlice";
 // =================================
 
 // =================================
@@ -22,6 +22,7 @@ const AddArticle: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openModalMessage, setOpenModalMessage] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
   const [text, setText] = useState<string>("  ");
   const [category, setCategory] = useState<string>("");
   const [textToCopy, settextToCopy] = useState<string>("");
@@ -44,7 +45,8 @@ const AddArticle: React.FC = () => {
     if (socket) {
       const handleArticleAdded = (data: { message: string; article?: any }) => {
         console.log(data.message);
-        socket.emit("getArticles");
+        dispatch(setArticle(data.article));
+        // socket.emit("getArticles");
         setSuccessMessage(data.message);
         setOpenModalMessage(true);
         setTimeout(() => {
@@ -83,6 +85,13 @@ const AddArticle: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setTitle(e.target.value);
+  };
+
+  // =================================
+  const TagHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setTag(e.target.value);
   };
 
   // =================================
@@ -140,12 +149,13 @@ const AddArticle: React.FC = () => {
 
     try {
       const articleData = {
+        category,
+        tag,
         title,
         text,
-        category,
         textenCopy,
       };
-      console.log("=====articleData=====", articleData);
+      console.log("=====articleData to send=====", articleData);
       if (socket) {
         socket.emit("addArticle", { articleData });
       }
@@ -160,7 +170,7 @@ const AddArticle: React.FC = () => {
       className={`${styles.addauctionform} flex flex-col  max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 space-y-4`}
     >
       <ModalMessage message={successMessage} open={openModalMessage} />
-      <h2 className="text-2xl font-semibold italic text-gray-800">Add Form</h2>
+      {/* <h2 className="text-2xl font-semibold italic text-gray-800">Add Form</h2> */}
       <h3 className="text-gray-700 font-bold italic ">
         Category:
         {category}
@@ -171,6 +181,12 @@ const AddArticle: React.FC = () => {
         value={category}
         onChange={CategoryHandler}
       />
+      <h3 className="text-gray-700 font-bold italic ">
+        Tag:
+        {tag}
+      </h3>
+      <Input typeInput="text" data="Tag" value={tag} onChange={TagHandler} />
+
       <h3 className="text-gray-700 font-bold italic ">
         Title:
         {title}
@@ -185,7 +201,7 @@ const AddArticle: React.FC = () => {
       <Input typeInput="text" data="Text" value={text} onChange={TextHandler} />
 
       {/* ================== */}
-
+      <h3 className="text-gray-700 font-bold  italic ">Texten copy:</h3>
       {textenCopy &&
         textenCopy.map((foo, idx) => {
           return <p key={idx}>{foo}</p>;
@@ -215,7 +231,7 @@ const AddArticle: React.FC = () => {
       </div>
       {/* ================== */}
 
-      <Button onClick={handleSubmit} children="Add Auction" />
+      <Button onClick={handleSubmit} children="Add" />
     </form>
   );
 };

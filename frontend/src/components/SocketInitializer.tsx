@@ -32,14 +32,13 @@ const SocketInitializer: React.FC = () => {
     socket.on("connect", () => {
       console.log("Connected to server with id:", socket.id);
       dispatch(setSocket(socket));
-
-      if (!articles.length > 0) {
-        socket.emit("getArticles");
-        socket.on("articlesList", (articles) => {
-          console.log("Received articles from server:", articles);
+      socket.emit("getArticles");
+      socket.on("articlesList", (articles) => {
+        console.log("Received articles from server:", articles);
+        if (articles.length > 0) {
           dispatch(setArticles(articles));
-        });
-      }
+        }
+      });
     });
 
     socket.on("connect_error", (error) => {

@@ -3,41 +3,46 @@ import React, { useState, useEffect } from "react";
 import styles from "./List.module.scss";
 import Article from "@/components/Article/Article";
 import { RootState, useAppSelector } from "@/app/redux/store";
-// =================================
 
-// =================================
+// Интерфейс для статьи из Redux
+interface ArticleData {
+  _id: string;
+  category: string;
+  title: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  textenCopy?: string[]; // Опциональный массив строк
+}
+
+// Интерфейс для пропсов компонента List
 interface ListProps {
   handlerburgerClick: () => void;
   isOpen: boolean;
   curTitle: string;
 }
-// =================================
-const List: React.FC<ListProps> = ({ curTitle }) => {
-  const articles = useAppSelector((state) => state.articles.articles);
-  const [newArticles, setnewArticles] = useState([...articles]);
+
+// Компонент List
+const List: React.FC<ListProps> = ({
+  curTitle,
+  handlerburgerClick,
+  isOpen,
+}) => {
+  const articles = useAppSelector(
+    (state: RootState) => state.articles.articles
+  ) as ArticleData[];
+  const [art, setArt] = useState<ArticleData | undefined>(undefined);
 
   useEffect(() => {
     if (articles && curTitle) {
       console.log("<====curTitle====>", curTitle);
-      setnewArticles(
-        [...articles].filter((foo) => {
-          return foo.title === curTitle;
-        })
-      );
+      const foundArticle = articles.find((foo) => foo.title === curTitle);
+      setArt(foundArticle);
     }
-    console.log("<====newArticles====>", newArticles);
+    console.log("<====arts====>", art);
   }, [articles, curTitle]);
 
-  return (
-    <div className="list ">
-      <div className="">
-        {newArticles &&
-          newArticles.map((el) => {
-            return <Article key={el._id} post={el} />;
-          })}
-      </div>
-    </div>
-  );
+  return <div className="list">{art && <Article post={art} />}</div>;
 };
 
 export default List;

@@ -20,7 +20,15 @@
 }
 
 body {
-  background: whitesmoke;
+  background: #b0bec5;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0 0 !important;
 }

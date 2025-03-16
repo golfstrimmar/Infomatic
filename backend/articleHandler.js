@@ -18,6 +18,7 @@ export default (io, socket) => {
 
     const sanitizedData = {
       category: String(data.category),
+      tag: String(data.tag),
       title: String(data.title),
       text: String(data.text),
       textenCopy: Array.isArray(data.textenCopy)
