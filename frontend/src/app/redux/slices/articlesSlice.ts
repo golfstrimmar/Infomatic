@@ -28,8 +28,21 @@ const articlesSlice = createSlice({
     setArticle(state, action: PayloadAction<Article>) {
       state.articles = [...state.articles, action.payload];
     },
+    editArticle(state, action: PayloadAction<Article>) {
+      const updatedArticle = action.payload;
+      const index = state.articles.findIndex(
+        (article) =>
+          article._id === updatedArticle._id ||
+          article.title === updatedArticle.title
+      );
+      if (index !== -1) {
+        state.articles[index] = updatedArticle; // Обновляем статью
+      } else {
+        state.articles.push(updatedArticle); // Если статьи нет, добавляем (опционально)
+      }
+    },
   },
 });
 
-export const { setArticles, setArticle } = articlesSlice.actions;
+export const { setArticles, setArticle, editArticle } = articlesSlice.actions;
 export default articlesSlice.reducer;

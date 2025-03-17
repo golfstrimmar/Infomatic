@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import Article from "./models/Article.js";
+import Article from "../models/Article.js";
 
 export default (io, socket) => {
   socket.on("addArticle", async (payload) => {

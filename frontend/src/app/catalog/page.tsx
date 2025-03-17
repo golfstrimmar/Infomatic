@@ -2,7 +2,8 @@
 import React, { useState, useMemo, useEffect } from "react";
 import List from "@/components/List/List";
 import { useAppSelector, RootState } from "@/app/redux/store";
-
+import Edit from "@/assets/svg/edit.svg";
+import Link from "next/link";
 // Интерфейс статьи из Redux
 interface ArticleData {
   _id: string;
@@ -75,35 +76,27 @@ const Catalog: React.FC = () => {
     return Object.values(categoryMap);
   }, [articles]);
 
-  console.log("<====artCategories====>", artCategories);
-
   const handlerCatClick = (cat: string): void => {
-    console.log("<====cat====>", cat);
+    setActive("");
+    setCurTitle("");
     setOpenCategory((prev) => (prev === cat ? null : cat));
     setOpenTag(null);
   };
 
   const handlerTagClick = (tag: string): void => {
+    setActive("");
+    setCurTitle("");
     setOpenTag((prev) => (prev === tag ? null : tag));
   };
 
   const handlerClick = (title: string): void => {
+    setCurTitle("");
     setActive(title);
     setCurTitle(title);
   };
-
   useEffect(() => {
-    if (openCategory) {
-      console.log("<====openCategory====>", openCategory);
-    }
-  }, [openCategory]);
-
-  useEffect(() => {
-    if (openTag) {
-      console.log("<====openTag====>", openTag);
-    }
-  }, [openTag]);
-
+    console.log("<====active====>", active);
+  }, [active]);
   return (
     <div className="catalog">
       <h1 className="text-3xl font-semibold italic text-gray-800 text-center uppercase">
@@ -136,7 +129,7 @@ const Catalog: React.FC = () => {
                           className="flex flex-col items-center w-full"
                         >
                           <button
-                            className="border border-gray-500 w-[95%] z-[3] text-[#6B5F00] cursor-pointer bg-[#d5d24c] block"
+                            className="border border-gray-500 w-[97%] z-[3] text-[#6B5F00] cursor-pointer bg-[#d5d24c] block"
                             type="button"
                             value={tag.tag}
                             onClick={() => handlerTagClick(tag.tag)}
@@ -153,12 +146,22 @@ const Catalog: React.FC = () => {
                             {tag.titles.map((title) => (
                               <button
                                 key={title}
-                                className="border border-gray-500 w-[95%] z-[3] text-[#6B5F00] cursor-pointer bg-[#FFFEC9] block"
+                                className={`relative  border border-gray-500 w-[95%] z-[3] text-[#6B5F00] cursor-pointer  block  ${
+                                  active === title
+                                    ? "bg-[#67e4f5]"
+                                    : "bg-[#FFFEC9]"
+                                }`}
                                 type="button"
                                 value={title}
                                 onClick={() => handlerClick(title)}
                               >
                                 {title}
+                                <Link
+                                  href={`/catalog/${title}`}
+                                  className="absolute translate-[-50%] top-[50%] right-[0] z-50 "
+                                >
+                                  <Edit className="fill-[#6B5F00] w-3 h-3 hover:fill-amber-500 transition-all duration-200"></Edit>
+                                </Link>
                               </button>
                             ))}
                           </div>
@@ -167,11 +170,19 @@ const Catalog: React.FC = () => {
                     : el.titles.map((title) => (
                         <button
                           key={title}
-                          className="border border-gray-500 w-[95%] z-[3] text-[#6B5F00] cursor-pointer bg-[#FFFEC9] block"
+                          className={`relative  border border-gray-500 w-[95%] z-[3] text-[#6B5F00] cursor-pointer  block  ${
+                            active === title ? "bg-[#67e4f5]" : "bg-[#FFFEC9]"
+                          }`}
                           type="button"
                           onClick={() => handlerClick(title)}
                         >
                           {title}
+                          <Link
+                            href={`/catalog/${title}`}
+                            className="absolute translate-[-50%] top-[50%] right-[0] z-50 "
+                          >
+                            <Edit className="fill-[#6B5F00] w-3 h-3 hover:fill-amber-500 transition-all duration-200"></Edit>
+                          </Link>
                         </button>
                       ))}
                 </div>

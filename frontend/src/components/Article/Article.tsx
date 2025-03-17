@@ -16,12 +16,6 @@ interface PostProps {
 }
 
 const Article: React.FC<PostProps> = ({ post }) => {
-  useEffect(() => {
-    if (post) {
-      console.log("=====post=====", post);
-    }
-  }, [post]);
-
   return (
     <div className="border border-solid border-[#546e7a] bg-[#a8d6f9b3] rounded">
       <div className="text-grey flex flex-col bg-[#ECEFF1]">
@@ -29,7 +23,7 @@ const Article: React.FC<PostProps> = ({ post }) => {
           <Copy text={foo} key={idx} />
         ))}
       </div>
-      <div className="text-grey">{post.text}</div>
+      <div className="text-grey p-4">{post.text}</div>
     </div>
   );
 };

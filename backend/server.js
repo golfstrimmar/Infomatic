@@ -9,7 +9,8 @@ const app = express();
 const server = http.createServer(app);
 const httpServer = createServer(app);
 const io = new Server(httpServer);
-import articleHandler from "./articleHandler.js";
+import articleHandler from "./components/articleHandler.js";
+import articleEditHandler from "./components/articleEditHandler.js";
 connectDB();
 
 app.get("/", (req, res) => {
@@ -24,6 +25,7 @@ io.on("connection", (socket) => {
   });
 
   articleHandler(io, socket);
+  articleEditHandler(io, socket);
 });
 const PORT = process.env.PORT || 5000;
 httpServer.listen(PORT, () => {

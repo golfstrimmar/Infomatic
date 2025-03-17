@@ -1,43 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const readline = require("readline");
-
-// Создаем интерфейс для ввода с командной строки
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-const createReactComponent = (componentName) => {
-  // Путь к папке компонента в уже существующей структуре src/Components
-  const componentFolder = path.join(
-    __dirname,
-    "src",
-    "Components",
-    componentName
-  );
-
-  // Проверка, существует ли папка компонента, если нет - создаем
-  if (!fs.existsSync(componentFolder)) {
-    fs.mkdirSync(componentFolder, { recursive: true });
-    console.log(`Папка для компонента ${componentName} была успешно создана.`);
-  } else {
-    console.log(`Папка для компонента ${componentName} уже существует.`);
-  }
-
-  // Путь к файлу компонента
-  const componentFile = path.join(componentFolder, `${componentName}.tsx`);
-
-  // Путь к файлу SCSS
-  const scssFile = path.join(componentFolder, `${componentName}.module.scss`);
-
-  // Структура компонента (JSX)
-  const componentContent = `
-'use client';
-import React , { useState, useEffect } from 'react';
-import styles from './${componentName}.module.scss';
+"use client";
+import React, { useState, useEffect } from "react";
+import styles from "./test.module.scss";
 // =================================
-
 
 // =================================
 // interface testProps {
@@ -50,22 +14,20 @@ import styles from './${componentName}.module.scss';
 //   timestamp: string;
 // }
 
-
 // interface Auction {
 //   _id: string;
 //   title: string;
 //   startPrice: number;
 //   endTime: string;
 //   imageUrl: string;
-//   status: "active" | "ended" | "pending"; 
-//   creator: { userName: string; _id?: string }; 
+//   status: "active" | "ended" | "pending";
+//   creator: { userName: string; _id?: string };
 //   createdAt: string;
 //   updatedAt: string;
 //   __v: number;
 //   currentBid?: number;
 //   winner?: { user: string; amount: number };
 // }
-
 
 // interface SocketState {
 //   socket: Socket | null;
@@ -201,7 +163,7 @@ import styles from './${componentName}.module.scss';
 // }
 
 // =================================
-const ${componentName}: React.FC<${componentName}Props> = ({ handlerburgerClick, isOpen }) => {
+const test: React.FC<testProps> = ({ handlerburgerClick, isOpen }) => {
   // const router = useRouter();
   // const dispatch = useDispatch();
   // const dispatch = useAppDispatch();
@@ -210,8 +172,8 @@ const ${componentName}: React.FC<${componentName}Props> = ({ handlerburgerClick,
   // const socket = useSelector(
   //    (state: RootState) => state.socket.socket
   //  ) as Socket | null;
-  // const user = useAppSelector((state) => state.auth.user); 
-  // const token = useAppSelector((state) => state.auth.token); 
+  // const user = useAppSelector((state) => state.auth.user);
+  // const token = useAppSelector((state) => state.auth.token);
 
   // const [title, setTitle] = useState<string>("");
   // const [startPrice, setStartPrice] = useState<number>(0);
@@ -234,7 +196,7 @@ const ${componentName}: React.FC<${componentName}Props> = ({ handlerburgerClick,
   //  const auctions = useAppSelector(
   //   (state: RootState) => state.auctions.auctions
   // ) as Auction[];
- 
+
   // const [currentAuctions, setCurrentAuctions] = useState<Auction[]>([]);
   // const [tempAuctions, setTempAuctions] = useState<Auction[]>(auctions);
   // const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "">("");
@@ -276,75 +238,25 @@ const ${componentName}: React.FC<${componentName}Props> = ({ handlerburgerClick,
   // const [googlePassword, setGooglePassword] = useState<string>("");
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // const [bidAmount, setBidAmount] = useState<number | "">("");
+
   // ==============================
   // ==============================
   // ==============================
   // ==============================
   return (
-    <div className="${componentName.toLowerCase()}">
-        <div className={\`\${styles.burger} \${isOpen ? styles.run : ''}\`}
-      onClick={() => {
-        handlerburgerClick();
-      }}>
-            <div className="${componentName.toLowerCase()}-"></div>
-            <div className="${componentName.toLowerCase()}-"></div>
-            <div className="${componentName.toLowerCase()}-"></div>
-        </div>
+    <div className="test">
+      <div
+        className={`${styles.burger} ${isOpen ? styles.run : ""}`}
+        onClick={() => {
+          handlerburgerClick();
+        }}
+      >
+        <div className="test-"></div>
+        <div className="test-"></div>
+        <div className="test-"></div>
+      </div>
     </div>
   );
 };
 
-export default ${componentName};
-  `;
-
-  // Структура SCSS
-  const scssContent = `
-  @import '@/scss/common/colors';
-.${componentName.toLowerCase()} {
-  
-  &- {
-   
-
-    &- {
-     
-    }
-
-    &- {
-     
-    }
-
-    &- {
-     
-    }
-  }
-}
-  `;
-
-  // Запись содержимого в файл компонента (JSX)
-  fs.writeFileSync(componentFile, componentContent, "utf8");
-  console.log(
-    `Компонент ${componentName} был успешно создан в ${componentFile}`
-  );
-
-  // Запись содержимого в файл SCSS
-  fs.writeFileSync(scssFile, scssContent, "utf8");
-  console.log(
-    `Файл стилей ${componentName}.scss был успешно создан в ${scssFile}`
-  );
-};
-
-// Запрашиваем имя компонента у пользователя
-rl.question("Введите название нового компонента: ", (componentName) => {
-  if (!componentName) {
-    console.log("Имя компонента не может быть пустым.");
-    rl.close();
-    process.exit(1); // Завершаем процесс с ошибкой
-  }
-
-  // Создаем компонент с заданным именем
-  createReactComponent(componentName);
-
-  // Закрываем интерфейс readline и завершаем процесс
-  rl.close();
-  process.exit(0); // Завершаем процесс успешно
-});
+export default test;

@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AddArticle.module.scss";
 import Input from "@/components/ui/Input/Input";
-import axios from "axios";
-import ImagesIcon from "@/assets/svg/images.svg";
 import Button from "@/components/ui/Button/Button";
 import ModalMessage from "@/components/ModalMessage/ModalMessage";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +42,6 @@ const AddArticle: React.FC = () => {
   useEffect(() => {
     if (socket) {
       const handleArticleAdded = (data: { message: string; article?: any }) => {
-        console.log(data.message);
         dispatch(setArticle(data.article));
         // socket.emit("getArticles");
         setSuccessMessage(data.message);
@@ -114,8 +111,6 @@ const AddArticle: React.FC = () => {
     }
 
     if (textToCopy.length > 0) {
-      console.log("<==== textToCopy====>", textToCopy);
-      console.log("<====textToCopy.length====>", textToCopy.length);
       settextenCopy((prev) => {
         return [...prev, textToCopy];
       });
@@ -155,7 +150,6 @@ const AddArticle: React.FC = () => {
         text,
         textenCopy,
       };
-      console.log("=====articleData to send=====", articleData);
       if (socket) {
         socket.emit("addArticle", { articleData });
       }
@@ -197,20 +191,43 @@ const AddArticle: React.FC = () => {
         value={title}
         onChange={TitleHandler}
       />
-      <h3 className="text-gray-700 font-bold  italic ">Text: {text}</h3>
-      <Input typeInput="text" data="Text" value={text} onChange={TextHandler} />
+      <h3 className="text-gray-700 font-bold  italic ">Text: </h3>
+      <Input
+        typeInput="textarea"
+        data="Text"
+        value={text}
+        onChange={TextHandler}
+      />
 
       {/* ================== */}
       <h3 className="text-gray-700 font-bold  italic ">Texten copy:</h3>
       {textenCopy &&
         textenCopy.map((foo, idx) => {
-          return <p key={idx}>{foo}</p>;
+          // return <p key={idx}>{foo}</p>;
+
+          return (
+            <div key={idx} className="flex align-middle gap-1">
+              <button
+                type="button"
+                className="border border-solid border-[#546e7a] bg-[#a8d6f9b3] rounded p-2 cursor-pointer"
+                onClick={(e) => {
+                  settextToCopy(foo);
+                  settextenCopy((prev) => {
+                    return prev.filter((f) => f !== foo);
+                  });
+                }}
+                value={foo}
+              >
+                {foo}
+              </button>
+            </div>
+          );
         })}
       {/* ================== */}
 
-      <h3 className="text-gray-700 font-bold  italic ">
+      {/* <h3 className="text-gray-700 font-bold  italic ">
         Text to copy: {textToCopy}
-      </h3>
+      </h3> */}
       <h5 className="text-red-900">{errors}</h5>
       <div className="flex align-middle gap-1">
         <Input

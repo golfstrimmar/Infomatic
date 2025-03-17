@@ -34,12 +34,12 @@ const List: React.FC<ListProps> = ({
   const [art, setArt] = useState<ArticleData | undefined>(undefined);
 
   useEffect(() => {
-    if (articles && curTitle) {
-      console.log("<====curTitle====>", curTitle);
+    if (articles && curTitle !== "") {
       const foundArticle = articles.find((foo) => foo.title === curTitle);
       setArt(foundArticle);
+    } else {
+      setArt(undefined);
     }
-    console.log("<====arts====>", art);
   }, [articles, curTitle]);
 
   return <div className="list">{art && <Article post={art} />}</div>;
