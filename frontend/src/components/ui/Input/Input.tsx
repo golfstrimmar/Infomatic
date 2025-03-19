@@ -12,6 +12,7 @@ interface InputProps {
     | "tel"
     | "date"
     | "password"
+    | "search"
     | "time";
   data: string;
   value: string;

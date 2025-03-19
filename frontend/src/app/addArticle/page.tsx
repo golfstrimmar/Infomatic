@@ -43,7 +43,7 @@ const AddArticle: React.FC = () => {
     if (socket) {
       const handleArticleAdded = (data: { message: string; article?: any }) => {
         dispatch(setArticle(data.article));
-        // socket.emit("getArticles");
+        socket.emit("getArticles");
         setSuccessMessage(data.message);
         setOpenModalMessage(true);
         setTimeout(() => {
