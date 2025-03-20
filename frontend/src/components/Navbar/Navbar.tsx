@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const [activeLink, setactiveLink] = useState<string>("");
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 767) {
@@ -44,8 +44,13 @@ const Navbar: React.FC = () => {
           <li>
             <Link
               href="/"
-              className="text-white hover:text-gray-300 transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
+              className={` hover:text-gray-300 transition-colors duration-200 ${
+                activeLink === "home" ? "text-blue" : "text-white "
+              }`}
+              onClick={() => {
+                setIsOpen(false);
+                setactiveLink("home");
+              }}
             >
               Home
             </Link>
@@ -53,8 +58,13 @@ const Navbar: React.FC = () => {
           <li>
             <Link
               href="/catalog"
-              className="text-white hover:text-gray-300 transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
+              className={` hover:text-gray-300 transition-colors duration-200 ${
+                activeLink === "catalog" ? "text-blue" : "text-white "
+              }`}
+              onClick={() => {
+                setIsOpen(false);
+                setactiveLink("catalog");
+              }}
             >
               Catalog
             </Link>
@@ -62,8 +72,13 @@ const Navbar: React.FC = () => {
           <li>
             <Link
               href="/addArticle"
-              className="text-white hover:text-gray-300 transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
+              className={` hover:text-gray-300 transition-colors duration-200 ${
+                activeLink === "addArticle" ? "text-blue" : "text-white "
+              }`}
+              onClick={() => {
+                setIsOpen(false);
+                setactiveLink("addArticle");
+              }}
             >
               Add
             </Link>

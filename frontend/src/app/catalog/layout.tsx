@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Edit from "@/assets/svg/edit.svg";
 import { useState, useCallback } from "react";
-import ArticleSearch from "@/components/ArticleSearch/ArticleSearch";
+
 interface Tag {
   tag: string;
   titles: string[];
@@ -40,8 +40,7 @@ export default function CatalogLayout({
     (state: RootState) => state.articles.articles
   ) as ArticleData[];
 
- 
-
+  // ==================
   const artCategories = articles.reduce(
     (acc: { [key: string]: Category }, article) => {
       if (!acc[article.category]) {

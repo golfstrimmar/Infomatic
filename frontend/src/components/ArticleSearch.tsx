@@ -42,7 +42,7 @@ const ArticleSearch = ({ onSearch }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form onSubmit={handleSubmit}>
       <Input
         typeInput="search"
         data="search"
