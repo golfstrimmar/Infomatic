@@ -4,7 +4,8 @@ import Link from "next/link";
 import Burger from "../ui/Burger/Burger";
 import styles from "./Navbar.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+
+import { useRouter, useParams, usePathname } from "next/navigation";
 interface User {
   _id?: string;
   userName: string;
@@ -17,7 +18,14 @@ const Navbar: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const pathname = usePathname();
   const [activeLink, setactiveLink] = useState<string>("");
+  useEffect(() => {
+    console.log("<====activeLink====>", activeLink);
+    setactiveLink(pathname);
+  }, [pathname]);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 767) {
@@ -45,11 +53,10 @@ const Navbar: React.FC = () => {
             <Link
               href="/"
               className={` hover:text-gray-300 transition-colors duration-200 ${
-                activeLink === "home" ? "text-blue" : "text-white "
+                activeLink === "/" ? "text-blue" : "text-white "
               }`}
               onClick={() => {
                 setIsOpen(false);
-                setactiveLink("home");
               }}
             >
               Home
@@ -59,11 +66,10 @@ const Navbar: React.FC = () => {
             <Link
               href="/catalog"
               className={` hover:text-gray-300 transition-colors duration-200 ${
-                activeLink === "catalog" ? "text-blue" : "text-white "
+                activeLink === "/catalog" ? "text-blue" : "text-white "
               }`}
               onClick={() => {
                 setIsOpen(false);
-                setactiveLink("catalog");
               }}
             >
               Catalog
@@ -73,11 +79,10 @@ const Navbar: React.FC = () => {
             <Link
               href="/addArticle"
               className={` hover:text-gray-300 transition-colors duration-200 ${
-                activeLink === "addArticle" ? "text-blue" : "text-white "
+                activeLink === "/addArticle" ? "text-blue" : "text-white "
               }`}
               onClick={() => {
                 setIsOpen(false);
-                setactiveLink("addArticle");
               }}
             >
               Add

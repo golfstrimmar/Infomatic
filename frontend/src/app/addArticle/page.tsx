@@ -20,9 +20,9 @@ const AddArticle: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [openModalMessage, setOpenModalMessage] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
-  const [tag, setTag] = useState<string>("");
+  const [tag, setTag] = useState<string>("регистрация");
   const [text, setText] = useState<string>("  ");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>("СЕРВЕР Next");
   const [textToCopy, settextToCopy] = useState<string>("");
   const [textenCopy, settextenCopy] = useState<string[]>([]);
   const [errors, seterrors] = useState<string>("");

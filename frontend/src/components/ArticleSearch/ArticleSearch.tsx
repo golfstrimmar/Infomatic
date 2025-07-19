@@ -45,7 +45,7 @@ const ArticleSearch = ({ onSearch }: Props) => {
     <form onSubmit={handleSubmit} className="flex gap-2">
       <Input
         typeInput="search"
-        data="search"
+        data=""
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

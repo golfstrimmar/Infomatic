@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Article.module.scss";
 import Copy from "@/components/Copy/Copy";
-
+import Input from "@/components/ui/Input/Input";
 interface ArticleData {
   _id: string;
   category: string;
@@ -26,7 +26,13 @@ const ClientArticle = ({ initialArticle }: { initialArticle: ArticleData }) => {
           <Copy text={foo} key={idx} />
         ))}
       </div>
-      <div className="text-grey p-4">{initialArticle.text}</div>
+      <Input
+        typeInput="textarea"
+        data=""
+        value={initialArticle.text}
+        onChange={() => {}}
+      />
+      {/* <textarea className="text-grey p-4">{initialArticle.text}</textarea> */}
     </div>
   );
 };

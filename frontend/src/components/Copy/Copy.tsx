@@ -32,8 +32,8 @@ const Copy: React.FC<CopyProps> = ({ text }) => {
       value={text}
       onClick={handlerCopy}
       className={`${
-        activ ? "bg-emerald-400  " : ""
-      } cursor-pointer border rounded  px-1   border-emerald-900`}
+        activ ? "bg-amber-400" : "bg-amber-200"
+      } cursor-pointer border rounded  px-1   border-amber-900 transition-colors duration-300 ease-in-out`}
       required
       readOnly
     />
